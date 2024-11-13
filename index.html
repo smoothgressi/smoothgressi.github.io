@@ -1,6 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-  <title>Page de presentation - Smoothgressi</title>
+  <meta charset="UTF-8">
+  <title>Page de présentation - Smoothgressi</title>
   <link rel="icon" href="logo.ico" type="image/x-icon" />
   <style>
     body {
@@ -12,11 +14,11 @@
       justify-content: space-between;
       min-height: 100vh;
     }
-    
-    /* Barre en haut (alignée à gauche) */
+
+    /* Barre en haut avec logo et navbar */
     .header {
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       background-color: #2e8b57;
       padding: 10px 20px;
@@ -31,6 +33,19 @@
       color: white;
       margin: 0;
       font-size: 1.5em;
+    }
+
+    /* Navbar à droite */
+    .navbar {
+      display: flex;
+      gap: 25px;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-size: 1em;
+      cursor: pointer;
     }
 
     /* Contenu principal */
@@ -58,26 +73,128 @@
       font-size: 0.5em;
       color: #888;
     }
+
+    /* Style de la popup */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      width: 80%;
+      max-width: 600px;
+      padding: 20px;
+      background-color: #f0f8ff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      color: #f0f8ff;
+      z-index: 10;
+      opacity: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .popup.visible {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    .popup h3 {
+      font-size: 2em;
+      color: #2e8b57;
+      margin-bottom: 20px;
+    }
+
+    .popup .close-btn {
+      background-color: #2e8b57;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      margin-top: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Overlay pour la popup */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 5;
+      display: none;
+    }
+
+    .overlay.visible {
+      display: block;
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Barre avec logo et titre (alignée à gauche) -->
+  <!-- Barre avec logo et navbar -->
   <div class="header">
-    <img src="logo.png" alt="Logo">
-    <h2>Smoothgressi</h2>
+    <div class="branding">
+      <img src="logo.png" alt="Logo">
+      <h2>Smoothgressi</h2>
+    </div>
+    <div class="navbar">
+      <a href="#" class="nav-link">Pourquoi Smoothgressi ?</a>
+      <a href="#" class="nav-link">Fonctionnalités</a>
+      <a href="#" class="nav-link">Contact</a>
+      <a href="#" class="nav-link">Télécharger</a>
+    </div>
   </div>
 
   <!-- Contenu principal -->
   <div class="container">
-    <h1>Bientôt, decouvrez Smoothgressi</h1>
-    <p>Revenez dans quelques semaines pour découvrir l'évolution naturelle des logiciels de representation graphique.</p>
+    <h1>Bientôt, découvrez Smoothgressi</h1>
+    <p>Revenez dans quelques semaines pour découvrir l'évolution naturelle des logiciels de représentation graphique.</p>
   </div>
 
   <!-- Texte en bas de page -->
   <div class="footer">
-    <p>Smoothgressi sera disponible pour Windows 11 et Linux a sa sortie. Aucune version Mac n'est prevue.</p>
+    <p>Smoothgressi sera disponible pour Windows 11 et Linux à sa sortie. Aucune version Mac n'est prévue.</p>
   </div>
+
+  <!-- Overlay et Popup "Coming Soon" -->
+  <div class="overlay"></div>
+  <div class="popup" id="comingSoonPopup">
+    <h3>Disponible prochainement</h3>
+    <p>Cette page sera disponible quand le logiciel sera sorti</p>
+    <button class="close-btn">Fermer</button>
+  </div>
+
+  <script>
+    // Récupère les éléments de la popup et de l'overlay
+    const overlay = document.querySelector('.overlay');
+    const comingSoonPopup = document.getElementById('comingSoonPopup');
+    const closeBtn = comingSoonPopup.querySelector('.close-btn');
+
+    // Affiche la popup "Coming Soon" quand un lien du navbar est cliqué
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault(); // Empêche le comportement par défaut du lien
+        comingSoonPopup.classList.add('visible');
+        overlay.classList.add('visible');
+      });
+    });
+
+    // Ferme la popup quand on clique sur le bouton "Fermer" ou sur l'overlay
+    closeBtn.addEventListener('click', () => {
+      comingSoonPopup.classList.remove('visible');
+      overlay.classList.remove('visible');
+    });
+
+    overlay.addEventListener('click', () => {
+      comingSoonPopup.classList.remove('visible');
+      overlay.classList.remove('visible');
+    });
+  </script>
 
 </body>
 </html>
