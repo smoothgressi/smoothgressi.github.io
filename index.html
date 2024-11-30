@@ -139,6 +139,17 @@
       display: block;
       opacity: 1;
     }
+
+    /* Banner style */
+    .banner {
+      background-color: #2e8b57;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin: 20px;
+      border-radius: 15px;
+      font-size: 1.2em;
+    }
   </style>
 </head>
 <body>
@@ -152,9 +163,14 @@
     <div class="navbar">
       <a href="#" class="nav-link">Pourquoi Smoothgressi ?</a>
       <a href="#" class="nav-link">Fonctionnalités</a>
-      <a href="#" class="nav-link">Contact</a>
-      <a href="#" class="nav-link">Télécharger</a>
+      <a href="https://smoothgressi.github.io/online-smoothgressi" class="nav-link" id="online-link">Online (Beta)</a>
+      <a href="https://github.com/smoothgressi/Smoothgressi/releases/latest" class="nav-link" id="download-link">Télécharger</a>
     </div>
+  </div>
+
+  <!-- Green banner under the navbar -->
+  <div class="banner">
+    🥳 Smoothgressi Beta 3 (Beta Publique) est disponible ! Cette version peut contenir des bugs, mais si vous êtes aventureux, vous pouvez l'essayez en cliquant sur "Télécharger" ou essayer la version en ligne ("Online").
   </div>
 
   <!-- Contenu principal -->
@@ -172,7 +188,7 @@
   <div class="overlay"></div>
   <div class="popup" id="comingSoonPopup">
     <h3>Disponible prochainement</h3>
-    <p>Cette page sera disponible quand le logiciel sera sorti</p>
+    <p>Cette page sera disponible quand le logiciel stable sera sorti</p>
     <button class="close-btn">Fermer</button>
   </div>
 
@@ -181,14 +197,21 @@
     const overlay = document.querySelector('.overlay');
     const comingSoonPopup = document.getElementById('comingSoonPopup');
     const closeBtn = comingSoonPopup.querySelector('.close-btn');
+    const onlineLink = document.getElementById('online-link'); // ID de l'Online (Beta) link
+    const downloadLink = document.getElementById('download-link'); // ID de l'Télécharger link
 
-    // Affiche la popup "Coming Soon" quand un lien du navbar est cliqué
+    // Fonction pour ouvrir la popup
+    function showComingSoonPopup(e) {
+      e.preventDefault(); // Empêche le comportement par défaut du lien
+      comingSoonPopup.classList.add('visible');
+      overlay.classList.add('visible');
+    }
+
+    // Ajout des écouteurs d'événements pour tous les liens, sauf "Online (Beta)" et "Télécharger"
     document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault(); // Empêche le comportement par défaut du lien
-        comingSoonPopup.classList.add('visible');
-        overlay.classList.add('visible');
-      });
+      if (link !== onlineLink && link !== downloadLink) {
+        link.addEventListener('click', showComingSoonPopup);
+      }
     });
 
     // Ferme la popup quand on clique sur le bouton "Fermer" ou sur l'overlay
